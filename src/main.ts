@@ -9,7 +9,9 @@ compilerOptions.outDir parameter to reflect where compiler will be placing final
 specify other compiler parameters where needed
 npx tsc to compile`;
 
-// Cheatsheet:
+// Cheatsheet
+
+// Inferring Types
 
 type Role = {
     title: string;
@@ -32,3 +34,37 @@ const fruit = ['apple', 'egg', 'cucumber'] as const; // creating Union based on 
 type Fruit = typeof fruit[number];
 
 const someFruit: Fruit = 'egg';
+
+// Type Guards:
+
+type User = {
+    name: string;
+    role: 'user'
+}
+
+type Admin = {
+    name: string;
+    role: 'admin';
+    secret: 'hidden pass'
+}
+
+function isAdmin(data: User | Admin): data is Admin {
+    return data.role === 'admin';
+}
+
+function isAdmin2(data: User | Admin): data is Admin {
+    return (data as Admin).secret !== undefined;
+}
+
+const example: User = {
+    name: 'dude',
+    role: 'user'
+}
+
+const example2: Admin = {
+    name: 'boss',
+    role: 'admin',
+    secret: 'hidden pass'
+}
+
+console.log(isAdmin2(example2))
